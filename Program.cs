@@ -13,9 +13,7 @@ namespace net_jwt
         static void Main(string[] args)
         {
             var skey = SigningKeyHelper.BuildRsaSigningKey("./credentials.json");
-
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("13374967ym3v0987y36y");
             var expires = DateTime.UtcNow.AddMinutes(30);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -24,9 +22,12 @@ namespace net_jwt
                               new Claim("sub", "122877"),
                               new Claim("accountId", "122964"),
                               new Claim("client_id", "1X1AUU1753BDAA2K5HYVMVZ65"),
+                              new Claim("aud","https://accept-services.medhelp.se/authenticationservice/api/resources"),
+                              new Claim("aud","api"),
+                              new Claim("scope","api"),
+                              new Claim("scope","offline_access"),
                             }),
                 Issuer = "https://accept-services.medhelp.se/authenticationservice/api/",
-
                 Expires = expires,
                 SigningCredentials = new SigningCredentials(skey, SecurityAlgorithms.RsaSha256)
             };
